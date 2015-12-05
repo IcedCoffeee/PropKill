@@ -119,28 +119,6 @@ function GM:PlayerSpawnedProp( ply, model, ent )
 end
 
 /*---------------------------------------------------------
-   Name: OnEntityCreated
-   Desc: When an entity it created
----------------------------------------------------------*/
-function GM:OnEntityCreated( entity )
-	self.BaseClass:OnEntityCreated( entity )
-
-	entity:AddCallback( "PhysicsCollide", function( entity, data )
-		local physobj = data.HitObject
-		local physobj2 = data.PhysObject
-		local entity2 = data.HitEntity
-
-		-- Only worry about props!!!
-		if entity:GetClass() ~= "prop_physics" or entity2:GetClass() ~= "prop_physics" then return end
-
-		if physobj:IsPenetrating() or physobj2:IsPenetrating() then
-			physobj:EnableMotion( false )
-			physobj2:EnableMotion( false )
-		end
-	end )
-end
-
-/*---------------------------------------------------------
    Name: EntityTakeDamage
    Desc: When an entity takes damage
 ---------------------------------------------------------*/
@@ -164,9 +142,6 @@ function GM:InitPostEntity()
 
 		-- limit world space angular velocity to this (degrees / s)
 		physData.MaxAngularVelocity	= 3636
-
-		-- object will be frozen after this many collisions (visual hitching vs. CPU cost)
-		physData.MaxCollisionsPerObjectPerTimestep = 100
 
 		-- predict collisions this far (seconds) into the future
 		physData.LookAheadTimeObjectsVsObject = 1
