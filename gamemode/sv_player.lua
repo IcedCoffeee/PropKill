@@ -503,6 +503,10 @@ function GM:PlayerInitialSpawn( ply )
 	
 	-- MUST ALWAYS SET TEAM OR YOU GO TO 1001 :D
 	ply:SetTeam( TEAM_SPECTATOR )
+	
+	if ply:IsBot() then
+		ply:SetTeam( TEAM_BATTLER )
+	end
 
 	chatAddText( team.GetColor( TEAM_SPECTATOR ), ply:Nick(), COLOUR_DEFAULT, " has joined the game (", team.GetColor( TEAM_BATTLER ), ply:SteamID(), COLOUR_DEFAULT, ")" )
 
